@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+.env
+.vscode/
+.pytest_cache/
+.coverage
+dist/
+build/
+*.log
+*.tmp
+*.swp
+Thumbs.db
+Desktop.ini
