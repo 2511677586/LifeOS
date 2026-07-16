@@ -7,12 +7,16 @@ from datetime import datetime
 from typing import Iterable
 
 from app.models.knowledge_metadata import KnowledgeMetadata
+from app.services.knowledge_type_service import KnowledgeTypeService
 
 TITLE_LIMIT = 60
 HEADING_PATTERN = re.compile(r"^#{1,6}\s*")
 
 
 class MetadataService:
+    def __init__(self, knowledge_type_service: KnowledgeTypeService | None = None) -> None:
+        self._knowledge_type_service = knowledge_type_service or KnowledgeTypeService()
+
     def generate_knowledge_id(self, created_at: datetime | None = None) -> str:
         timestamp = (created_at or datetime.now().astimezone()).astimezone()
         timestamp_part = timestamp.strftime("%Y%m%d-%H%M%S")
@@ -35,7 +39,7 @@ class MetadataService:
             id=self.generate_knowledge_id(created_at),
             created_at=created_at,
             updated_at=created_at,
-            type="memory",
+            type=self._knowledge_type_service.default_type(),
             title=self.generate_title(content),
             tags=[],
             source="manual",

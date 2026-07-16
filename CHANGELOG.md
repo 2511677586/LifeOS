@@ -4,6 +4,10 @@
 - Initial project documentation for the LifeOS knowledge foundation.
 
 ### Added
+- Added official development workflow reference in `docs/DevelopmentWorkflow.md`.
+- Added `KnowledgeTypeService` with supported type definitions, normalization, validation, and default type helper methods.
+- Updated `MetadataService` to request the default knowledge type from `KnowledgeTypeService`.
+- Added unit tests for knowledge type valid values, invalid values, normalization, and default type behavior.
 - Structured YAML-style front matter for newly saved Markdown records.
 - Stable knowledge IDs for saved records.
 - Timezone-aware timestamps in record metadata.

@@ -34,6 +34,7 @@ Milestone 2 expands LifeOS from simple memory capture into the foundation of a s
 - Capture Service
 - Knowledge Service
 - Metadata Service
+- KnowledgeTypeService
 - Future Index Service
 - Future Search Service
 - Future Linking Service
@@ -61,7 +62,9 @@ graph TD
     DV --> LS[Future Linking Service]
 
     CS --> MS[Metadata Service]
+    MS --> KTS[KnowledgeTypeService]
     KS --> MS
+    KS --> KTS
     MS --> SD[Structured Markdown Front Matter]
     CS --> MD[Markdown Documents]
     KS --> MD
@@ -80,5 +83,6 @@ graph TD
 - Search indexes must be rebuildable from Markdown files.
 - UI code must not directly read or write Markdown files.
 - Knowledge IDs must remain stable.
+- Knowledge type values must be validated through the service layer.
 - Future AI functionality must consume the service layer rather than directly accessing the UI or storage layer.
 - Existing Memory Foundation behavior must remain intact while the knowledge layer is added.

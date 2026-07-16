@@ -13,7 +13,7 @@ Completed abilities:
 ## Milestone 2 — Knowledge Foundation
 
 Current ability:
-- Ability-0007 Knowledge Types
+- Ability-0008 Tag System
 
 Planned abilities in implementation order:
 - Ability-0006 Knowledge Metadata Foundation
@@ -27,3 +27,4 @@ Planned abilities in implementation order:
 
 Completed abilities:
 - Ability-0006 Knowledge Metadata Foundation
+- Ability-0007 Knowledge Types

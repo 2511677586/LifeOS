@@ -16,7 +16,7 @@
 - Expected user value: Users can distinguish memories, notes, ideas, and other knowledge categories.
 - Main architectural layer: Service Layer
 - Dependencies: Ability-0006 Knowledge Metadata Foundation
-- Status: Planned
+- Status: Completed
 
 ## Ability-0008 — Tag System
 - Ability ID: Ability-0008
@@ -25,7 +25,7 @@
 - Expected user value: Users can group related knowledge across topics and projects.
 - Main architectural layer: Service Layer
 - Dependencies: Ability-0006 Knowledge Metadata Foundation, Ability-0007 Knowledge Types
-- Status: Planned
+- Status: In Progress
 
 ## Ability-0009 — Knowledge Index
 - Ability ID: Ability-0009

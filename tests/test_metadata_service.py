@@ -3,6 +3,7 @@ from __future__ import annotations
 import unittest
 from datetime import datetime
 
+from app.services.knowledge_type_service import KnowledgeTypeService
 from app.services.metadata_service import MetadataService
 
 
@@ -59,6 +60,16 @@ class MetadataServiceTests(unittest.TestCase):
         self.assertIn("source: ", document)
         self.assertIn("version: 1", document)
         self.assertIn("\n---\n\nSample content", document)
+
+    def test_default_type_is_provided_by_knowledge_type_service(self) -> None:
+        class CustomKnowledgeTypeService(KnowledgeTypeService):
+            def default_type(self) -> str:
+                return "note"
+
+        metadata_service = MetadataService(knowledge_type_service=CustomKnowledgeTypeService())
+        metadata = metadata_service.create_metadata("Sample content")
+        self.assertEqual(metadata.type, "note")
+
 
 
 if __name__ == "__main__":

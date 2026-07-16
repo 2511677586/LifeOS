@@ -31,3 +31,7 @@ Rationale: The new metadata format must not break Milestone 1 records.
 ## DL-008 — No automatic migration in Ability-0006
 Decision: Ability-0006 will not automatically rewrite or migrate existing records.
 Rationale: Backward compatibility is required without changing user data unexpectedly.
+
+## DL-009 — Knowledge types are centralized in a dedicated service
+Decision: Ability-0007 introduces KnowledgeTypeService as the single service-layer source for supported knowledge types, normalization, validation, and default type selection.
+Rationale: Centralizing type rules keeps metadata behavior consistent and avoids UI/storage coupling.
