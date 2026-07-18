@@ -1,5 +1,13 @@
 # Ability List
 
+## Architecture Sprint-002 — Milestone 2 Knowledge Foundation Closure
+- Sprint ID: Architecture Sprint-002
+- Name: Milestone 2 Knowledge Foundation Closure
+- Purpose: Formally close Milestone 2 with architecture validation, consistency review, and milestone completion documentation.
+- Main architectural layer: Architecture Governance
+- Dependencies: Ability-0006 through Ability-0012 completed
+- Status: Completed
+
 ## Ability-0006 — Knowledge Service
 - Ability ID: Ability-0006
 - Name: Knowledge Service

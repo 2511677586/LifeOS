@@ -12,19 +12,18 @@ Completed abilities:
 
 ## Milestone 2 — Knowledge Foundation
 
-Current ability:
-- Ability-0008 Tag System
+Completed abilities:
+- Ability-0006 Knowledge Service
+- Ability-0007 Knowledge Metadata
+- Ability-0008 Knowledge Repository
+- Ability-0009 Knowledge Query
+- Ability-0010 Knowledge Types
+- Ability-0011 Knowledge Relations
+- Ability-0012 Timeline Foundation
+- Architecture Sprint-002 Milestone 2 Knowledge Foundation Closure
 
-Planned abilities in implementation order:
-- Ability-0006 Knowledge Metadata Foundation
-- Ability-0007 Knowledge Types
-- Ability-0008 Tag System
-- Ability-0009 Knowledge Index
-- Ability-0010 Knowledge Search
-- Ability-0011 Knowledge Detail View
-- Ability-0012 Knowledge Linking
+Remaining planned abilities:
 - Ability-0013 Knowledge Browser
 
-Completed abilities:
-- Ability-0006 Knowledge Metadata Foundation
-- Ability-0007 Knowledge Types
+Next milestone entry condition:
+- Milestone 3 Search Foundation starts only through existing service/query/repository boundaries.
