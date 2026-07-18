@@ -4,6 +4,10 @@
 - Initial project documentation for the LifeOS knowledge foundation.
 
 ### Added
+- Added `KnowledgeRelation` model and relation type catalog (`knowledge_relation.py`, `knowledge_relation_types.py`).
+- Added `KnowledgeRelationService` with create, validate, normalize, list outgoing/incoming, and remove operations.
+- Added warning-based backward compatibility for unknown relation types and deferred referential integrity checks.
+- Added unit tests for relation creation, ID validation, type normalization, unknown type compatibility, filtering, and removal.
 - Added `models/knowledge_types.py` as the centralized Knowledge Type catalog with standard and extension example types.
 - Updated `KnowledgeTypeService` to canonicalize legacy aliases and warn on unknown types without breaking existing records.
 - Updated `MetadataService` and `KnowledgeQueryService` to use standardized type definitions.

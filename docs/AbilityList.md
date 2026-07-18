@@ -45,14 +45,14 @@
 - Dependencies: Ability-0009 Knowledge Query
 - Status: Completed
 
-## Ability-0011 — Knowledge Detail View
+## Ability-0011 — Knowledge Relations
 - Ability ID: Ability-0011
-- Name: Knowledge Detail View
-- Purpose: Show a single knowledge record with its metadata and content.
-- Expected user value: Users can inspect and understand an individual record in context.
-- Main architectural layer: Presentation Layer
-- Dependencies: Ability-0006 Knowledge Service, Ability-0009 Knowledge Query
-- Status: Planned
+- Name: Knowledge Relations
+- Purpose: Establish a reusable relation model and service layer for connecting Knowledge Objects.
+- Expected user value: Enables future graph, timeline, and cross-domain context without coupling relation logic to UI or storage.
+- Main architectural layer: Service Layer
+- Dependencies: Ability-0006 Knowledge Service, Ability-0009 Knowledge Query, Ability-0010 Knowledge Types
+- Status: Completed
 
 ## Ability-0012 — Knowledge Linking
 - Ability ID: Ability-0012
@@ -60,7 +60,7 @@
 - Purpose: Add explicit relationships between knowledge records.
 - Expected user value: Users can connect related ideas and build a knowledge graph.
 - Main architectural layer: Service Layer
-- Dependencies: Ability-0009 Knowledge Query, Ability-0011 Knowledge Detail View
+- Dependencies: Ability-0009 Knowledge Query, Ability-0011 Knowledge Relations
 - Status: Planned
 
 ## Ability-0013 — Knowledge Browser
@@ -69,5 +69,5 @@
 - Purpose: Provide a dedicated browsing experience for structured knowledge.
 - Expected user value: Users can navigate their knowledge base beyond recent captures.
 - Main architectural layer: Presentation Layer
-- Dependencies: Ability-0009 Knowledge Query, Ability-0010 Knowledge Types, Ability-0011 Knowledge Detail View, Ability-0012 Knowledge Linking
+- Dependencies: Ability-0009 Knowledge Query, Ability-0010 Knowledge Types, Ability-0011 Knowledge Relations, Ability-0012 Knowledge Linking
 - Status: Planned

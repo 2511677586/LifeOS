@@ -36,6 +36,7 @@ Milestone 2 expands LifeOS from simple memory capture into the foundation of a s
 - Knowledge Query Service
 - Metadata Service
 - KnowledgeTypeService
+- KnowledgeRelationService
 - Future Index Service
 - Future Search Service
 - Future Linking Service
@@ -136,6 +137,52 @@ Compatibility rule:
 - Validation emits a clear warning instead of breaking existing records.
 - Legacy aliases are canonicalized where applicable (for example, `memory` -> `journal`).
 
+### Relation Layer
+
+`KnowledgeRelationService` provides platform-oriented relation modeling between
+stable Knowledge IDs.
+
+Core relation model:
+
+- source_id
+- relation_type
+- target_id
+- metadata (optional, extensible)
+
+Standard relation types:
+
+- related_to
+- belongs_to
+- contains
+- mentions
+- created_by
+- derived_from
+- follows
+- precedes
+- occurred_at
+- uses
+- verified_by
+
+Compatibility and integrity rules:
+
+- Empty source_id and target_id are rejected.
+- Referenced objects are not required to exist at creation time.
+- Referential integrity is deferred to future repository integration.
+- Unknown relation types remain readable and produce a clear validation warning.
+
+Persistence boundary:
+
+- Relation business logic stays in `KnowledgeRelationService`.
+- UI and `StorageService` do not own relation business logic.
+- TODO: Persist relations through a dedicated relation repository once Markdown
+    relation storage format is finalized.
+
+Platform-oriented examples (architecture reuse):
+
+- LifeOS: Journal mentions Person; Event occurred_at Place; Note belongs_to Project
+- MineSystem: Shipment uses Vehicle; Shipment contains Container; Shipment verified_by Inspection
+- ICE Studio: Scene features Character; Scene located_in World; Scene follows Scene
+
 ### Architecture Diagram
 
 ```mermaid
@@ -154,6 +201,7 @@ graph TD
 
     CS --> MS[Metadata Service]
     MS --> KTS[KnowledgeTypeService]
+    KS --> KRS[KnowledgeRelationService]
     KS --> KQS[Knowledge Query Service]
     KQS --> KR[Knowledge Repository]
     KS --> MS
