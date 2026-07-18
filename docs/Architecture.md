@@ -59,11 +59,20 @@ UI -> Capture Service -> Storage Service -> Markdown
 Target Knowledge Layer path (Milestone 2 architecture):
 
 ```text
-UI -> Knowledge Service -> Storage Service -> Markdown
+UI -> Knowledge Service -> Knowledge Repository -> Storage Service -> Markdown
 ```
 
 `KnowledgeService` centralizes knowledge-level orchestration while preserving
 the existing Markdown file format and storage behavior.
+
+### Repository Layer
+
+`KnowledgeRepository` is the persistence boundary for Knowledge Objects.
+
+- Receives persistence requests from `KnowledgeService`
+- Delegates file operations to `StorageService`
+- Preserves compatibility with existing Markdown files
+- Keeps persistence logic out of the service orchestration layer
 
 ### Metadata Layer
 
@@ -102,11 +111,13 @@ graph TD
 
     CS --> MS[Metadata Service]
     MS --> KTS[KnowledgeTypeService]
+    KS --> KR[Knowledge Repository]
     KS --> MS
     KS --> KTS
     MS --> SD[Structured Markdown Front Matter]
     CS --> MD[Markdown Documents]
-    KS --> MD
+    KR --> ST[Storage Service]
+    ST --> MD
     SS --> IX[Future Index Service]
     LS --> IX
 

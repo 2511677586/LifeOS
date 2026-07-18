@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from app.models.knowledge_metadata import KnowledgeMetadata
+from app.repositories.knowledge_repository import KnowledgeRepository
 from app.services.metadata_service import MetadataService
 from app.services.storage_service import StoredRecord, StorageService
 
@@ -25,7 +26,7 @@ class KnowledgeService:
     Current scope:
     - Preserve existing Markdown storage behavior.
     - Provide placeholder CRUD/list methods for future development.
-    - Delegate to StorageService where safe and available.
+    - Delegate persistence to KnowledgeRepository.
 
     Non-goals in this phase:
     - Search implementation.
@@ -35,10 +36,12 @@ class KnowledgeService:
 
     def __init__(
         self,
+        knowledge_repository: KnowledgeRepository | None = None,
         storage_service: StorageService | None = None,
         metadata_service: MetadataService | None = None,
     ) -> None:
-        self._storage_service = storage_service or StorageService()
+        resolved_storage_service = storage_service or StorageService()
+        self._knowledge_repository = knowledge_repository or KnowledgeRepository(storage_service=resolved_storage_service)
         self._metadata_service = metadata_service or MetadataService()
 
     def create_knowledge(
@@ -53,7 +56,7 @@ class KnowledgeService:
         """Create and persist a knowledge document as Markdown.
 
         This integrates the Metadata layer so new Knowledge Objects receive a
-        standard metadata envelope before being saved via StorageService.
+        standard metadata envelope before being saved via KnowledgeRepository.
 
         TODO: Route all UI knowledge-write entry points through this method.
         """
@@ -69,49 +72,34 @@ class KnowledgeService:
             source=source,
         )
         document = self._metadata_service.build_markdown_document(cleaned_content, metadata)
-        path = self._storage_service.save_markdown(metadata.id, document)
+        path = self._knowledge_repository.save(metadata.id, document)
         return SavedKnowledge(metadata=metadata, path=path, document=document)
 
     def load_knowledge(self, knowledge_id: str) -> str:
         """Load a knowledge document by stable knowledge ID.
 
-        This placeholder resolves the existing Markdown path convention and
-        reads content via StorageService.
+        This delegates persistence concerns to KnowledgeRepository.
         """
-        record_path = self._resolve_record_path(knowledge_id)
-        return self._storage_service.read_markdown(record_path)
+        return self._knowledge_repository.load(knowledge_id)
 
     def update_knowledge(self, knowledge_id: str, document: str) -> Path:
         """Update an existing knowledge document.
 
         TODO: Add richer update semantics and optimistic conflict handling.
-        Currently this reuses the existing save behavior to preserve compatibility.
+        Persistence is delegated to KnowledgeRepository.
         """
-        if not self._storage_service.record_exists(knowledge_id):
-            raise FileNotFoundError(f"Knowledge record not found: {knowledge_id}")
-        return self._storage_service.save_markdown(knowledge_id, document)
+        return self._knowledge_repository.update(knowledge_id, document)
 
     def delete_knowledge(self, knowledge_id: str) -> None:
         """Delete a knowledge document by stable knowledge ID.
 
         TODO: Introduce soft-delete, archive policy, and relation-safe deletion.
         """
-        record_path = self._resolve_record_path(knowledge_id)
-        record_path.unlink()
+        self._knowledge_repository.delete(knowledge_id)
 
     def list_knowledge(self, limit: int = 20) -> list[StoredRecord]:
         """List recent knowledge records.
 
-        Placeholder implementation delegates to existing storage listing behavior.
+        Placeholder implementation delegates to repository listing behavior.
         """
-        return self._storage_service.list_recent_records(limit=limit)
-
-    def _resolve_record_path(self, knowledge_id: str) -> Path:
-        if not self._storage_service.record_exists(knowledge_id):
-            raise FileNotFoundError(f"Knowledge record not found: {knowledge_id}")
-        records_dir = getattr(
-            self._storage_service,
-            "_records_dir",
-            Path(__file__).resolve().parents[2] / "data" / "records",
-        )
-        return records_dir / f"{knowledge_id}.md"
+        return self._knowledge_repository.list(limit=limit)

@@ -4,6 +4,9 @@
 - Initial project documentation for the LifeOS knowledge foundation.
 
 ### Added
+- Added `KnowledgeRepository` with `save`, `load`, `update`, `delete`, and `list` methods as the dedicated persistence layer for Knowledge Objects.
+- Added unit tests for repository save/load/update/delete/list behavior and legacy Markdown compatibility.
+- Refactored `KnowledgeService` to delegate persistence operations to `KnowledgeRepository`.
 - Added `KnowledgeMetadata` standard model fields (`id`, `title`, `type`, `created`, `updated`, `tags`, `source`, `version`).
 - Added `MetadataService.update_metadata()` and `MetadataService.validate_metadata()` for metadata lifecycle management.
 - Integrated `KnowledgeService.create_knowledge()` with `MetadataService` for metadata-first knowledge creation.

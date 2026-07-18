@@ -18,14 +18,14 @@
 - Dependencies: Ability-0006 Knowledge Service
 - Status: Completed
 
-## Ability-0008 — Tag System
+## Ability-0008 — Knowledge Repository
 - Ability ID: Ability-0008
-- Name: Tag System
-- Purpose: Introduce tags as lightweight metadata for knowledge organization.
-- Expected user value: Users can group related knowledge across topics and projects.
+- Name: Knowledge Repository
+- Purpose: Introduce a dedicated repository layer responsible only for Knowledge Object persistence.
+- Expected user value: Improves architecture stability by separating service orchestration from persistence concerns.
 - Main architectural layer: Service Layer
 - Dependencies: Ability-0006 Knowledge Service, Ability-0007 Knowledge Metadata
-- Status: In Progress
+- Status: Completed
 
 ## Ability-0009 — Knowledge Index
 - Ability ID: Ability-0009
@@ -33,7 +33,7 @@
 - Purpose: Build a derived index over Markdown knowledge records.
 - Expected user value: Faster browsing and preparation for search and relationships.
 - Main architectural layer: Storage Layer
-- Dependencies: Ability-0006 Knowledge Service, Ability-0008 Tag System
+- Dependencies: Ability-0006 Knowledge Service, Ability-0008 Knowledge Repository
 - Status: Planned
 
 ## Ability-0010 — Knowledge Search
