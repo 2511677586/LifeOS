@@ -45,6 +45,26 @@ Milestone 2 expands LifeOS from simple memory capture into the foundation of a s
 - Future JSON index
 - Future SQLite index
 
+### Knowledge Layer Transition
+
+The Knowledge Foundation introduces `KnowledgeService` as the unified entry
+point for knowledge operations.
+
+Current runtime path (Milestone 1 baseline):
+
+```text
+UI -> Capture Service -> Storage Service -> Markdown
+```
+
+Target Knowledge Layer path (Milestone 2 architecture):
+
+```text
+UI -> Knowledge Service -> Storage Service -> Markdown
+```
+
+`KnowledgeService` centralizes knowledge-level orchestration while preserving
+the existing Markdown file format and storage behavior.
+
 ### Architecture Diagram
 
 ```mermaid

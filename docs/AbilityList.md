@@ -1,10 +1,10 @@
 # Ability List
 
-## Ability-0006 — Knowledge Metadata Foundation
+## Ability-0006 — Knowledge Service
 - Ability ID: Ability-0006
-- Name: Knowledge Metadata Foundation
-- Purpose: Add structured, machine-readable metadata to newly saved knowledge records while keeping Markdown human-readable.
-- Expected user value: Records become easier to organize, search, and evolve without changing the capture workflow.
+- Name: Knowledge Service
+- Purpose: Establish a unified service-layer entry point for knowledge operations while preserving existing Markdown behavior.
+- Expected user value: Provides a stable architecture boundary for future knowledge CRUD, indexing, and automation without changing current user workflow.
 - Main architectural layer: Service Layer
 - Dependencies: Milestone 1 capture flow, Markdown storage, stable record save workflow
 - Status: Completed
@@ -15,7 +15,7 @@
 - Purpose: Add an extensible type field for classifying knowledge records.
 - Expected user value: Users can distinguish memories, notes, ideas, and other knowledge categories.
 - Main architectural layer: Service Layer
-- Dependencies: Ability-0006 Knowledge Metadata Foundation
+- Dependencies: Ability-0006 Knowledge Service
 - Status: Completed
 
 ## Ability-0008 — Tag System
@@ -24,7 +24,7 @@
 - Purpose: Introduce tags as lightweight metadata for knowledge organization.
 - Expected user value: Users can group related knowledge across topics and projects.
 - Main architectural layer: Service Layer
-- Dependencies: Ability-0006 Knowledge Metadata Foundation, Ability-0007 Knowledge Types
+- Dependencies: Ability-0006 Knowledge Service, Ability-0007 Knowledge Types
 - Status: In Progress
 
 ## Ability-0009 — Knowledge Index
@@ -33,7 +33,7 @@
 - Purpose: Build a derived index over Markdown knowledge records.
 - Expected user value: Faster browsing and preparation for search and relationships.
 - Main architectural layer: Storage Layer
-- Dependencies: Ability-0006 Knowledge Metadata Foundation, Ability-0008 Tag System
+- Dependencies: Ability-0006 Knowledge Service, Ability-0008 Tag System
 - Status: Planned
 
 ## Ability-0010 — Knowledge Search
@@ -51,7 +51,7 @@
 - Purpose: Show a single knowledge record with its metadata and content.
 - Expected user value: Users can inspect and understand an individual record in context.
 - Main architectural layer: Presentation Layer
-- Dependencies: Ability-0006 Knowledge Metadata Foundation, Ability-0009 Knowledge Index
+- Dependencies: Ability-0006 Knowledge Service, Ability-0009 Knowledge Index
 - Status: Planned
 
 ## Ability-0012 — Knowledge Linking

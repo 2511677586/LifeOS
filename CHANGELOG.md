@@ -4,6 +4,7 @@
 - Initial project documentation for the LifeOS knowledge foundation.
 
 ### Added
+- Added `KnowledgeService` as the Knowledge Layer entry point with placeholder create/load/update/delete/list methods delegating to the existing storage layer.
 - Added official development workflow reference in `docs/DevelopmentWorkflow.md`.
 - Added `KnowledgeTypeService` with supported type definitions, normalization, validation, and default type helper methods.
 - Updated `MetadataService` to request the default knowledge type from `KnowledgeTypeService`.
