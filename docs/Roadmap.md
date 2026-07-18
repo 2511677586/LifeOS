@@ -22,8 +22,16 @@ Completed abilities:
 - Ability-0012 Timeline Foundation
 - Architecture Sprint-002 Milestone 2 Knowledge Foundation Closure
 
-Remaining planned abilities:
-- Ability-0013 Knowledge Browser
+Milestone status:
+- Completed
 
-Next milestone entry condition:
-- Milestone 3 Search Foundation starts only through existing service/query/repository boundaries.
+## Milestone 3 — Search Foundation
+
+Planned ability sequence:
+
+- Ability-0013 Search Architecture
+- Ability-0014 Plain Text Search
+- Ability-0015 Search Result Model
+- Ability-0016 Search Ranking
+- Ability-0017 Search UI
+- Architecture Sprint-003 Search Foundation Closure

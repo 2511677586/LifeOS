@@ -4,6 +4,8 @@
 - Initial project documentation for the LifeOS knowledge foundation.
 
 ### Added
+- Added `docs/SearchArchitecture.md` to define Search Foundation architecture, service boundaries, staged search evolution, and deferred capabilities.
+- Updated roadmap and ability planning to start Milestone 3 Search Foundation after Milestone 2 closure.
 - Added Milestone 2 closure documentation in `docs/Milestone2KnowledgeFoundation.md` and marked Architecture Sprint-002 as completed.
 - Added `KnowledgeTime` model and `TimelineService` for timeline normalization, sorting, filtering, and temporal grouping.
 - Added timeline fallback precedence (`occurred_at -> created -> created_at -> file timestamp`) for backward compatibility.
