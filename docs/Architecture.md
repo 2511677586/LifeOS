@@ -33,6 +33,7 @@ Milestone 2 expands LifeOS from simple memory capture into the foundation of a s
 ### Service Layer
 - Capture Service
 - Knowledge Service
+- Knowledge Query Service
 - Metadata Service
 - KnowledgeTypeService
 - Future Index Service
@@ -59,11 +60,21 @@ UI -> Capture Service -> Storage Service -> Markdown
 Target Knowledge Layer path (Milestone 2 architecture):
 
 ```text
-UI -> Knowledge Service -> Knowledge Repository -> Storage Service -> Markdown
+UI -> Knowledge Service -> Knowledge Query Service -> Knowledge Repository -> Storage Service -> Markdown
 ```
 
 `KnowledgeService` centralizes knowledge-level orchestration while preserving
 the existing Markdown file format and storage behavior.
+
+### Query Layer
+
+`KnowledgeQueryService` is the read-oriented query boundary for Knowledge
+Objects.
+
+- Uses `KnowledgeRepository` only
+- Retrieves records by id and list operations
+- Applies metadata-based filtering (type, tag, date range)
+- Preserves compatibility with legacy Markdown without front matter
 
 ### Repository Layer
 
@@ -111,7 +122,8 @@ graph TD
 
     CS --> MS[Metadata Service]
     MS --> KTS[KnowledgeTypeService]
-    KS --> KR[Knowledge Repository]
+    KS --> KQS[Knowledge Query Service]
+    KQS --> KR[Knowledge Repository]
     KS --> MS
     KS --> KTS
     MS --> SD[Structured Markdown Front Matter]

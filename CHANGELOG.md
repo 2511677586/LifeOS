@@ -4,6 +4,9 @@
 - Initial project documentation for the LifeOS knowledge foundation.
 
 ### Added
+- Added `KnowledgeQueryService` with `list_all`, `get_by_id`, `filter_by_type`, `filter_by_tag`, and `filter_by_date_range` methods.
+- Added query-layer unit tests for id lookup and metadata-based filtering with legacy compatibility.
+- Updated `KnowledgeService` to delegate query-related retrieval operations to `KnowledgeQueryService`.
 - Added `KnowledgeRepository` with `save`, `load`, `update`, `delete`, and `list` methods as the dedicated persistence layer for Knowledge Objects.
 - Added unit tests for repository save/load/update/delete/list behavior and legacy Markdown compatibility.
 - Refactored `KnowledgeService` to delegate persistence operations to `KnowledgeRepository`.

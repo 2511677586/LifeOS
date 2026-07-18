@@ -37,8 +37,14 @@ class KnowledgeRepository:
         record_path = self._resolve_record_path(knowledge_id)
         record_path.unlink()
 
-    def list(self, limit: int = 20) -> list[StoredRecord]:
-        """List recent knowledge records from Markdown storage."""
+    def list(self, limit: int | None = 20) -> list[StoredRecord]:
+        """List recent knowledge records from Markdown storage.
+
+        When limit is None, this returns all known Markdown records.
+        """
+        if limit is None:
+            # Use a large practical upper bound while reusing storage ordering logic.
+            return self._storage_service.list_recent_records(limit=2**31 - 1)
         return self._storage_service.list_recent_records(limit=limit)
 
     def _resolve_record_path(self, knowledge_id: str) -> Path:

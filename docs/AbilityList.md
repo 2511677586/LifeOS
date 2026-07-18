@@ -27,14 +27,14 @@
 - Dependencies: Ability-0006 Knowledge Service, Ability-0007 Knowledge Metadata
 - Status: Completed
 
-## Ability-0009 — Knowledge Index
+## Ability-0009 — Knowledge Query
 - Ability ID: Ability-0009
-- Name: Knowledge Index
-- Purpose: Build a derived index over Markdown knowledge records.
-- Expected user value: Faster browsing and preparation for search and relationships.
-- Main architectural layer: Storage Layer
+- Name: Knowledge Query
+- Purpose: Introduce a dedicated query layer for retrieval and metadata-based filtering of Knowledge Objects.
+- Expected user value: Enables structured read operations without coupling UI or orchestration logic to persistence details.
+- Main architectural layer: Service Layer
 - Dependencies: Ability-0006 Knowledge Service, Ability-0008 Knowledge Repository
-- Status: Planned
+- Status: Completed
 
 ## Ability-0010 — Knowledge Search
 - Ability ID: Ability-0010
@@ -42,7 +42,7 @@
 - Purpose: Search knowledge records by metadata and content.
 - Expected user value: Users can find stored knowledge quickly.
 - Main architectural layer: Service Layer
-- Dependencies: Ability-0009 Knowledge Index
+- Dependencies: Ability-0009 Knowledge Query
 - Status: Planned
 
 ## Ability-0011 — Knowledge Detail View
@@ -51,7 +51,7 @@
 - Purpose: Show a single knowledge record with its metadata and content.
 - Expected user value: Users can inspect and understand an individual record in context.
 - Main architectural layer: Presentation Layer
-- Dependencies: Ability-0006 Knowledge Service, Ability-0009 Knowledge Index
+- Dependencies: Ability-0006 Knowledge Service, Ability-0009 Knowledge Query
 - Status: Planned
 
 ## Ability-0012 — Knowledge Linking
@@ -60,7 +60,7 @@
 - Purpose: Add explicit relationships between knowledge records.
 - Expected user value: Users can connect related ideas and build a knowledge graph.
 - Main architectural layer: Service Layer
-- Dependencies: Ability-0009 Knowledge Index, Ability-0011 Knowledge Detail View
+- Dependencies: Ability-0009 Knowledge Query, Ability-0011 Knowledge Detail View
 - Status: Planned
 
 ## Ability-0013 — Knowledge Browser
@@ -69,5 +69,5 @@
 - Purpose: Provide a dedicated browsing experience for structured knowledge.
 - Expected user value: Users can navigate their knowledge base beyond recent captures.
 - Main architectural layer: Presentation Layer
-- Dependencies: Ability-0009 Knowledge Index, Ability-0010 Knowledge Search, Ability-0011 Knowledge Detail View, Ability-0012 Knowledge Linking
+- Dependencies: Ability-0009 Knowledge Query, Ability-0010 Knowledge Search, Ability-0011 Knowledge Detail View, Ability-0012 Knowledge Linking
 - Status: Planned

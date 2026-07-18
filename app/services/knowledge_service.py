@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from datetime import datetime
 from pathlib import Path
 
 from app.models.knowledge_metadata import KnowledgeMetadata
 from app.repositories.knowledge_repository import KnowledgeRepository
+from app.services.knowledge_query_service import KnowledgeQueryService
 from app.services.metadata_service import MetadataService
 from app.services.storage_service import StoredRecord, StorageService
 
@@ -37,11 +39,13 @@ class KnowledgeService:
     def __init__(
         self,
         knowledge_repository: KnowledgeRepository | None = None,
+        knowledge_query_service: KnowledgeQueryService | None = None,
         storage_service: StorageService | None = None,
         metadata_service: MetadataService | None = None,
     ) -> None:
         resolved_storage_service = storage_service or StorageService()
         self._knowledge_repository = knowledge_repository or KnowledgeRepository(storage_service=resolved_storage_service)
+        self._knowledge_query_service = knowledge_query_service or KnowledgeQueryService(self._knowledge_repository)
         self._metadata_service = metadata_service or MetadataService()
 
     def create_knowledge(
@@ -78,9 +82,12 @@ class KnowledgeService:
     def load_knowledge(self, knowledge_id: str) -> str:
         """Load a knowledge document by stable knowledge ID.
 
-        This delegates persistence concerns to KnowledgeRepository.
+        This delegates retrieval concerns to KnowledgeQueryService.
         """
-        return self._knowledge_repository.load(knowledge_id)
+        record = self._knowledge_query_service.get_by_id(knowledge_id)
+        if record is None:
+            raise FileNotFoundError(f"Knowledge record not found: {knowledge_id}")
+        return record.content
 
     def update_knowledge(self, knowledge_id: str, document: str) -> Path:
         """Update an existing knowledge document.
@@ -100,6 +107,18 @@ class KnowledgeService:
     def list_knowledge(self, limit: int = 20) -> list[StoredRecord]:
         """List recent knowledge records.
 
-        Placeholder implementation delegates to repository listing behavior.
+        Placeholder implementation delegates to query layer listing behavior.
         """
-        return self._knowledge_repository.list(limit=limit)
+        return self._knowledge_query_service.list_all()[:limit]
+
+    def filter_knowledge_by_type(self, knowledge_type: str) -> list[StoredRecord]:
+        """Filter knowledge records by type through the query layer."""
+        return self._knowledge_query_service.filter_by_type(knowledge_type)
+
+    def filter_knowledge_by_tag(self, tag: str) -> list[StoredRecord]:
+        """Filter knowledge records by tag through the query layer."""
+        return self._knowledge_query_service.filter_by_tag(tag)
+
+    def filter_knowledge_by_date_range(self, start_date: datetime, end_date: datetime) -> list[StoredRecord]:
+        """Filter knowledge records by created date range through the query layer."""
+        return self._knowledge_query_service.filter_by_date_range(start_date, end_date)
