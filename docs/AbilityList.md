@@ -36,14 +36,14 @@
 - Dependencies: Ability-0006 Knowledge Service, Ability-0008 Knowledge Repository
 - Status: Completed
 
-## Ability-0010 — Knowledge Search
+## Ability-0010 — Knowledge Types
 - Ability ID: Ability-0010
-- Name: Knowledge Search
-- Purpose: Search knowledge records by metadata and content.
-- Expected user value: Users can find stored knowledge quickly.
+- Name: Knowledge Types
+- Purpose: Standardize and validate metadata type values across service and query layers.
+- Expected user value: Keeps knowledge classification consistent while preserving readability of legacy and custom type data.
 - Main architectural layer: Service Layer
 - Dependencies: Ability-0009 Knowledge Query
-- Status: Planned
+- Status: Completed
 
 ## Ability-0011 — Knowledge Detail View
 - Ability ID: Ability-0011
@@ -69,5 +69,5 @@
 - Purpose: Provide a dedicated browsing experience for structured knowledge.
 - Expected user value: Users can navigate their knowledge base beyond recent captures.
 - Main architectural layer: Presentation Layer
-- Dependencies: Ability-0009 Knowledge Query, Ability-0010 Knowledge Search, Ability-0011 Knowledge Detail View, Ability-0012 Knowledge Linking
+- Dependencies: Ability-0009 Knowledge Query, Ability-0010 Knowledge Types, Ability-0011 Knowledge Detail View, Ability-0012 Knowledge Linking
 - Status: Planned

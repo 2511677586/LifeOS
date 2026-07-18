@@ -24,7 +24,7 @@ class CaptureServiceTests(unittest.TestCase):
             self.assertIn("updated: ", document)
             self.assertIn("created_at: ", document)
             self.assertIn("updated_at: ", document)
-            self.assertIn("type: \"memory\"", document)
+            self.assertIn("type: \"journal\"", document)
             self.assertIn("title: \"Today’s project idea\"", document)
             self.assertIn("tags: []", document)
             self.assertIn("source: \"manual\"", document)

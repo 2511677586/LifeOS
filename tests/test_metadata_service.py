@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import unittest
+import warnings
 from datetime import datetime, timezone
 
 from app.models.knowledge_metadata import KnowledgeMetadata
@@ -67,11 +68,18 @@ class MetadataServiceTests(unittest.TestCase):
     def test_default_type_is_provided_by_knowledge_type_service(self) -> None:
         class CustomKnowledgeTypeService(KnowledgeTypeService):
             def default_type(self) -> str:
-                return "note"
+                return "journal"
 
         metadata_service = MetadataService(knowledge_type_service=CustomKnowledgeTypeService())
         metadata = metadata_service.create_metadata("Sample content")
-        self.assertEqual(metadata.type, "note")
+        self.assertEqual(metadata.type, "journal")
+
+    def test_unknown_type_warns_but_metadata_is_still_created(self) -> None:
+        with warnings.catch_warnings(record=True) as caught:
+            warnings.simplefilter("always")
+            metadata = self.service.create_metadata("Sample content", knowledge_type="legacycustom")
+        self.assertEqual(metadata.type, "legacycustom")
+        self.assertTrue(any("Unsupported knowledge type" in str(item.message) for item in caught))
 
     def test_update_metadata_refreshes_updated_and_version(self) -> None:
         metadata = self.service.create_metadata("Original")

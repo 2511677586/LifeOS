@@ -46,7 +46,7 @@ class KnowledgeQueryServiceTests(unittest.TestCase):
             (
                 "---\n"
                 "id: \"knowledge-legacy\"\n"
-                "type: \"journal\"\n"
+                "type: \"memory\"\n"
                 "tags: [\"archive\"]\n"
                 "created_at: \"2026-07-12T10:30:00+00:00\"\n"
                 "---\n\n"
@@ -74,6 +74,11 @@ class KnowledgeQueryServiceTests(unittest.TestCase):
 
     def test_filter_by_type(self) -> None:
         records = self.service.filter_by_type("journal")
+        record_ids = {record.path.stem for record in records}
+        self.assertEqual(record_ids, {"knowledge-001", "knowledge-legacy"})
+
+    def test_filter_by_type_uses_standardized_aliases(self) -> None:
+        records = self.service.filter_by_type("memory")
         record_ids = {record.path.stem for record in records}
         self.assertEqual(record_ids, {"knowledge-001", "knowledge-legacy"})
 

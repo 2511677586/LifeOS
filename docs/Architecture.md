@@ -104,6 +104,38 @@ Markdown front matter to keep records human-readable and machine-readable.
 For backward compatibility, front matter continues to include legacy
 `created_at` and `updated_at` aliases.
 
+### Knowledge Type System
+
+`KnowledgeTypeService` validates and canonicalizes metadata type values based on
+the shared catalog in `models/knowledge_types.py`.
+
+Standard types:
+
+- journal
+- idea
+- meeting
+- project
+- document
+- photo
+- video
+- conversation
+- book
+- article
+- person
+- place
+- event
+
+Reserved extension examples:
+
+- MineSystem: shipment, inspection, laboratoryreport, vehicle, container
+- ICE Studio: character, world, story, scene, dialogue
+
+Compatibility rule:
+
+- Unknown or legacy types remain readable.
+- Validation emits a clear warning instead of breaking existing records.
+- Legacy aliases are canonicalized where applicable (for example, `memory` -> `journal`).
+
 ### Architecture Diagram
 
 ```mermaid

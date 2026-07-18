@@ -49,7 +49,7 @@ class MetadataService:
         metadata = KnowledgeMetadata(
             id=self.generate_knowledge_id(created),
             title=title.strip() if title else self.generate_title(content),
-            type=self._knowledge_type_service.normalize_type(knowledge_type)
+            type=self._knowledge_type_service.validate_type(knowledge_type)
             if knowledge_type is not None
             else self._knowledge_type_service.default_type(),
             created=created,
@@ -73,9 +73,9 @@ class MetadataService:
         updated_metadata = replace(
             metadata,
             title=title.strip() if title is not None else metadata.title,
-            type=self._knowledge_type_service.normalize_type(knowledge_type)
+            type=self._knowledge_type_service.validate_type(knowledge_type)
             if knowledge_type is not None
-            else metadata.type,
+            else self._knowledge_type_service.validate_type(metadata.type),
             tags=[tag.strip() for tag in tags if tag and tag.strip()] if tags is not None else metadata.tags,
             source=(source.strip() if source is not None and source.strip() else metadata.source),
             updated=self.generate_timestamp(),
@@ -95,8 +95,7 @@ class MetadataService:
             raise ValueError("Metadata updated timestamp cannot be earlier than created.")
         if metadata.version < 1:
             raise ValueError("Metadata version must be >= 1.")
-        # Reuse centralized type validation to keep values consistent.
-        self._knowledge_type_service.validate_type(metadata.type)
+        metadata.type = self._knowledge_type_service.validate_type(metadata.type)
 
     def build_markdown_document(self, content: str, metadata: KnowledgeMetadata) -> str:
         front_matter = self.serialize_front_matter(metadata)

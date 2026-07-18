@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from app.repositories.knowledge_repository import KnowledgeRepository
+from app.services.knowledge_type_service import KnowledgeTypeService
 from app.services.storage_service import StoredRecord
 
 
@@ -19,8 +20,13 @@ class KnowledgeQueryService:
     Markdown files that may not contain front matter metadata.
     """
 
-    def __init__(self, knowledge_repository: KnowledgeRepository) -> None:
+    def __init__(
+        self,
+        knowledge_repository: KnowledgeRepository,
+        knowledge_type_service: KnowledgeTypeService | None = None,
+    ) -> None:
         self._knowledge_repository = knowledge_repository
+        self._knowledge_type_service = knowledge_type_service or KnowledgeTypeService()
 
     def list_all(self) -> list[StoredRecord]:
         """Return all known records in repository order (most recent first)."""
@@ -38,14 +44,14 @@ class KnowledgeQueryService:
 
     def filter_by_type(self, knowledge_type: str) -> list[StoredRecord]:
         """Filter records by metadata type value."""
-        normalized_type = knowledge_type.strip().lower()
+        normalized_type = self._knowledge_type_service.canonicalize_type(knowledge_type)
         if not normalized_type:
             return []
 
         matches: list[StoredRecord] = []
         for record in self.list_all():
             metadata = self._parse_front_matter(record.content)
-            record_type = str(metadata.get("type", "")).strip().lower()
+            record_type = self._knowledge_type_service.canonicalize_type(str(metadata.get("type", "")))
             if record_type == normalized_type:
                 matches.append(record)
         return matches
