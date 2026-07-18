@@ -20,6 +20,8 @@ class CaptureServiceTests(unittest.TestCase):
             document = saved_record.path.read_text(encoding="utf-8")
             self.assertTrue(document.startswith("---\n"))
             self.assertIn("id: ", document)
+            self.assertIn("created: ", document)
+            self.assertIn("updated: ", document)
             self.assertIn("created_at: ", document)
             self.assertIn("updated_at: ", document)
             self.assertIn("type: \"memory\"", document)

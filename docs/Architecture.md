@@ -65,6 +65,25 @@ UI -> Knowledge Service -> Storage Service -> Markdown
 `KnowledgeService` centralizes knowledge-level orchestration while preserving
 the existing Markdown file format and storage behavior.
 
+### Metadata Layer
+
+`MetadataService` defines and manages the standard metadata envelope used by
+Knowledge Objects:
+
+- id
+- title
+- type
+- created
+- updated
+- tags
+- source
+- version
+
+Metadata is generated and validated in the service layer, then serialized into
+Markdown front matter to keep records human-readable and machine-readable.
+For backward compatibility, front matter continues to include legacy
+`created_at` and `updated_at` aliases.
+
 ### Architecture Diagram
 
 ```mermaid

@@ -9,11 +9,11 @@
 - Dependencies: Milestone 1 capture flow, Markdown storage, stable record save workflow
 - Status: Completed
 
-## Ability-0007 — Knowledge Types
+## Ability-0007 — Knowledge Metadata
 - Ability ID: Ability-0007
-- Name: Knowledge Types
-- Purpose: Add an extensible type field for classifying knowledge records.
-- Expected user value: Users can distinguish memories, notes, ideas, and other knowledge categories.
+- Name: Knowledge Metadata
+- Purpose: Establish the standard metadata model and service lifecycle for Knowledge Objects.
+- Expected user value: Knowledge records remain human-readable while gaining consistent machine-readable metadata for future capabilities.
 - Main architectural layer: Service Layer
 - Dependencies: Ability-0006 Knowledge Service
 - Status: Completed
@@ -24,7 +24,7 @@
 - Purpose: Introduce tags as lightweight metadata for knowledge organization.
 - Expected user value: Users can group related knowledge across topics and projects.
 - Main architectural layer: Service Layer
-- Dependencies: Ability-0006 Knowledge Service, Ability-0007 Knowledge Types
+- Dependencies: Ability-0006 Knowledge Service, Ability-0007 Knowledge Metadata
 - Status: In Progress
 
 ## Ability-0009 — Knowledge Index

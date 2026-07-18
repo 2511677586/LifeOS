@@ -1,8 +1,9 @@
 from __future__ import annotations
 
 import unittest
-from datetime import datetime
+from datetime import datetime, timezone
 
+from app.models.knowledge_metadata import KnowledgeMetadata
 from app.services.knowledge_type_service import KnowledgeTypeService
 from app.services.metadata_service import MetadataService
 
@@ -37,8 +38,8 @@ class MetadataServiceTests(unittest.TestCase):
 
     def test_timestamps_are_timezone_aware_iso_strings(self) -> None:
         metadata = self.service.create_metadata("Content")
-        created = metadata.created_at
-        updated = metadata.updated_at
+        created = metadata.created
+        updated = metadata.updated
         self.assertIsNotNone(created.tzinfo)
         self.assertIsNotNone(updated.tzinfo)
         created_text = self.service._format_datetime(created)
@@ -52,6 +53,8 @@ class MetadataServiceTests(unittest.TestCase):
         document = self.service.build_markdown_document("Sample content", metadata)
         self.assertTrue(document.startswith("---\n"))
         self.assertIn("id: ", document)
+        self.assertIn("created: ", document)
+        self.assertIn("updated: ", document)
         self.assertIn("created_at: ", document)
         self.assertIn("updated_at: ", document)
         self.assertIn("type: ", document)
@@ -69,6 +72,28 @@ class MetadataServiceTests(unittest.TestCase):
         metadata_service = MetadataService(knowledge_type_service=CustomKnowledgeTypeService())
         metadata = metadata_service.create_metadata("Sample content")
         self.assertEqual(metadata.type, "note")
+
+    def test_update_metadata_refreshes_updated_and_version(self) -> None:
+        metadata = self.service.create_metadata("Original")
+        updated_metadata = self.service.update_metadata(metadata, title="Updated title", tags=["work", ""])
+        self.assertEqual(updated_metadata.title, "Updated title")
+        self.assertEqual(updated_metadata.tags, ["work"])
+        self.assertGreaterEqual(updated_metadata.updated, metadata.updated)
+        self.assertEqual(updated_metadata.version, metadata.version + 1)
+
+    def test_validate_metadata_rejects_invalid_timestamps(self) -> None:
+        invalid_metadata = KnowledgeMetadata(
+            id="knowledge-20260718-000000-abc123",
+            title="Invalid",
+            type="memory",
+            created=datetime(2026, 7, 18, 8, 0, tzinfo=timezone.utc),
+            updated=datetime(2026, 7, 18, 7, 59, tzinfo=timezone.utc),
+            tags=[],
+            source="manual",
+            version=1,
+        )
+        with self.assertRaises(ValueError):
+            self.service.validate_metadata(invalid_metadata)
 
 
 

@@ -1,8 +1,18 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from pathlib import Path
 
+from app.models.knowledge_metadata import KnowledgeMetadata
+from app.services.metadata_service import MetadataService
 from app.services.storage_service import StoredRecord, StorageService
+
+
+@dataclass(slots=True)
+class SavedKnowledge:
+    metadata: KnowledgeMetadata
+    path: Path
+    document: str
 
 
 class KnowledgeService:
@@ -23,16 +33,44 @@ class KnowledgeService:
     - Database-backed primary storage.
     """
 
-    def __init__(self, storage_service: StorageService | None = None) -> None:
+    def __init__(
+        self,
+        storage_service: StorageService | None = None,
+        metadata_service: MetadataService | None = None,
+    ) -> None:
         self._storage_service = storage_service or StorageService()
+        self._metadata_service = metadata_service or MetadataService()
 
-    def create_knowledge(self, knowledge_id: str, document: str) -> Path:
+    def create_knowledge(
+        self,
+        content: str,
+        *,
+        title: str | None = None,
+        knowledge_type: str | None = None,
+        tags: list[str] | None = None,
+        source: str = "manual",
+    ) -> SavedKnowledge:
         """Create and persist a knowledge document as Markdown.
 
-        For now this delegates directly to StorageService and keeps the
-        current Markdown format unchanged.
+        This integrates the Metadata layer so new Knowledge Objects receive a
+        standard metadata envelope before being saved via StorageService.
+
+        TODO: Route all UI knowledge-write entry points through this method.
         """
-        return self._storage_service.save_markdown(knowledge_id, document)
+        cleaned_content = content.strip()
+        if not cleaned_content:
+            raise ValueError("Content cannot be empty.")
+
+        metadata = self._metadata_service.create_metadata(
+            cleaned_content,
+            title=title,
+            knowledge_type=knowledge_type,
+            tags=tags,
+            source=source,
+        )
+        document = self._metadata_service.build_markdown_document(cleaned_content, metadata)
+        path = self._storage_service.save_markdown(metadata.id, document)
+        return SavedKnowledge(metadata=metadata, path=path, document=document)
 
     def load_knowledge(self, knowledge_id: str) -> str:
         """Load a knowledge document by stable knowledge ID.
