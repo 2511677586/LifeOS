@@ -18,6 +18,7 @@ class KnowledgeMetadata:
     type: str
     created: datetime
     updated: datetime
+    occurred_at: datetime | None = None
     tags: list[str] = field(default_factory=list)
     source: str = "manual"
     version: int = 1

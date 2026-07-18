@@ -4,6 +4,10 @@
 - Initial project documentation for the LifeOS knowledge foundation.
 
 ### Added
+- Added `KnowledgeTime` model and `TimelineService` for timeline normalization, sorting, filtering, and temporal grouping.
+- Added timeline fallback precedence (`occurred_at -> created -> created_at -> file timestamp`) for backward compatibility.
+- Added unit tests for datetime normalization, occurred_at precedence, range filtering, sorting order, grouping, and missing occurred_at compatibility.
+- Extended metadata support with optional `occurred_at` serialization while preserving existing `created`/`updated` compatibility.
 - Added `KnowledgeRelation` model and relation type catalog (`knowledge_relation.py`, `knowledge_relation_types.py`).
 - Added `KnowledgeRelationService` with create, validate, normalize, list outgoing/incoming, and remove operations.
 - Added warning-based backward compatibility for unknown relation types and deferred referential integrity checks.

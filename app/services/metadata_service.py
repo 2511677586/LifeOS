@@ -42,6 +42,7 @@ class MetadataService:
         *,
         title: str | None = None,
         knowledge_type: str | None = None,
+        occurred_at: datetime | None = None,
         tags: Iterable[str] | None = None,
         source: str = "manual",
     ) -> KnowledgeMetadata:
@@ -54,6 +55,7 @@ class MetadataService:
             else self._knowledge_type_service.default_type(),
             created=created,
             updated=created,
+            occurred_at=occurred_at,
             tags=[tag.strip() for tag in (tags or []) if tag and tag.strip()],
             source=source.strip() if source.strip() else "manual",
             version=1,
@@ -67,6 +69,7 @@ class MetadataService:
         *,
         title: str | None = None,
         knowledge_type: str | None = None,
+        occurred_at: datetime | None = None,
         tags: Iterable[str] | None = None,
         source: str | None = None,
     ) -> KnowledgeMetadata:
@@ -76,6 +79,7 @@ class MetadataService:
             type=self._knowledge_type_service.validate_type(knowledge_type)
             if knowledge_type is not None
             else self._knowledge_type_service.validate_type(metadata.type),
+            occurred_at=occurred_at if occurred_at is not None else metadata.occurred_at,
             tags=[tag.strip() for tag in tags if tag and tag.strip()] if tags is not None else metadata.tags,
             source=(source.strip() if source is not None and source.strip() else metadata.source),
             updated=self.generate_timestamp(),
@@ -91,6 +95,8 @@ class MetadataService:
             raise ValueError("Metadata title cannot be empty.")
         if metadata.created.tzinfo is None or metadata.updated.tzinfo is None:
             raise ValueError("Metadata timestamps must be timezone-aware.")
+        if metadata.occurred_at is not None and metadata.occurred_at.tzinfo is None:
+            raise ValueError("Metadata occurred_at must be timezone-aware when provided.")
         if metadata.updated < metadata.created:
             raise ValueError("Metadata updated timestamp cannot be earlier than created.")
         if metadata.version < 1:
@@ -109,6 +115,8 @@ class MetadataService:
         updated_text = self._format_datetime(metadata.updated)
         lines.append(f'created: {self._quote_string(created_text)}')
         lines.append(f'updated: {self._quote_string(updated_text)}')
+        if metadata.occurred_at is not None:
+            lines.append(f'occurred_at: {self._quote_string(self._format_datetime(metadata.occurred_at))}')
         # Legacy aliases keep compatibility for downstream readers expecting old keys.
         lines.append(f'created_at: {self._quote_string(created_text)}')
         lines.append(f'updated_at: {self._quote_string(updated_text)}')

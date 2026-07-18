@@ -37,6 +37,7 @@ Milestone 2 expands LifeOS from simple memory capture into the foundation of a s
 - Metadata Service
 - KnowledgeTypeService
 - KnowledgeRelationService
+- TimelineService
 - Future Index Service
 - Future Search Service
 - Future Linking Service
@@ -183,6 +184,48 @@ Platform-oriented examples (architecture reuse):
 - MineSystem: Shipment uses Vehicle; Shipment contains Container; Shipment verified_by Inspection
 - ICE Studio: Scene features Character; Scene located_in World; Scene follows Scene
 
+### Time Model
+
+`KnowledgeTime` defines temporal semantics for Knowledge Objects:
+
+- created_at: object creation time in LifeOS
+- updated_at: last modification time in LifeOS
+- occurred_at: represented real-world event time
+- optional future-compatible fields: ended_at, timezone, precision, source
+
+These timestamps are not interchangeable and must be interpreted by their
+separate semantics.
+
+Backward compatibility behavior:
+
+- Existing Markdown may omit occurred_at.
+- Timeline resolution fallback order is:
+    occurred_at -> created -> created_at -> file timestamp
+- Unknown time metadata is preserved as-is.
+- Historical Markdown files are not rewritten automatically.
+
+### Timeline Service
+
+`TimelineService` provides temporal normalization and grouping logic while
+staying within service boundaries:
+
+- Uses `KnowledgeQueryService` for record retrieval
+- Does not access `StorageService` directly
+- Uses ISO 8601-compatible, timezone-aware datetime handling
+- Rejects invalid or naive datetime values with clear validation behavior
+
+Future foundation support (architecture reuse):
+
+- LifeOS: journals, photos, conversations, travel events, personal milestones
+- MineSystem: departure time, arrival time, loading completion time, return-to-port time
+- ICE Studio: fictional chronology, scene order, world history, character events
+
+Long-term direction:
+
+- Future Life Timeline views can reuse this service layer.
+- Future Life Map features can consume normalized occurred_at semantics without
+    changing the core model.
+
 ### Architecture Diagram
 
 ```mermaid
@@ -203,6 +246,8 @@ graph TD
     MS --> KTS[KnowledgeTypeService]
     KS --> KRS[KnowledgeRelationService]
     KS --> KQS[Knowledge Query Service]
+    KS --> TLS[TimelineService]
+    TLS --> KQS
     KQS --> KR[Knowledge Repository]
     KS --> MS
     KS --> KTS

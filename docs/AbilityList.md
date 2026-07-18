@@ -54,14 +54,14 @@
 - Dependencies: Ability-0006 Knowledge Service, Ability-0009 Knowledge Query, Ability-0010 Knowledge Types
 - Status: Completed
 
-## Ability-0012 — Knowledge Linking
+## Ability-0012 — Timeline Foundation
 - Ability ID: Ability-0012
-- Name: Knowledge Linking
-- Purpose: Add explicit relationships between knowledge records.
-- Expected user value: Users can connect related ideas and build a knowledge graph.
+- Name: Timeline Foundation
+- Purpose: Establish a platform-oriented time model and timeline service for temporal retrieval and grouping.
+- Expected user value: Enables future timeline/map experiences while preserving backward-compatible Markdown workflows.
 - Main architectural layer: Service Layer
-- Dependencies: Ability-0009 Knowledge Query, Ability-0011 Knowledge Relations
-- Status: Planned
+- Dependencies: Ability-0007 Knowledge Metadata, Ability-0009 Knowledge Query, Ability-0010 Knowledge Types
+- Status: Completed
 
 ## Ability-0013 — Knowledge Browser
 - Ability ID: Ability-0013
@@ -69,5 +69,5 @@
 - Purpose: Provide a dedicated browsing experience for structured knowledge.
 - Expected user value: Users can navigate their knowledge base beyond recent captures.
 - Main architectural layer: Presentation Layer
-- Dependencies: Ability-0009 Knowledge Query, Ability-0010 Knowledge Types, Ability-0011 Knowledge Relations, Ability-0012 Knowledge Linking
+- Dependencies: Ability-0009 Knowledge Query, Ability-0010 Knowledge Types, Ability-0011 Knowledge Relations, Ability-0012 Timeline Foundation
 - Status: Planned
